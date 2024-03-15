@@ -3,12 +3,13 @@
 # 检查是否提供了 URL 参数
 if [ $# -ne 1 ]; then
     echo "#Usage: $0 <INTERFACE_URL>"
-    echo "collect_result 0"
+    echo "collect_result{url="unknown"} 0"
     exit 1
 fi
 
 # 第一个参数是接口的 URL
 INTERFACE_URL=$1
+COLLECT_RESULT='collect_result{url="'${INTERFACE_URL}'"}'
 
 # 使用 curl 获取接口数据
 RESPONSE=$(curl -s "$INTERFACE_URL")
@@ -16,7 +17,7 @@ RESPONSE=$(curl -s "$INTERFACE_URL")
 # 检查 curl 命令是否成功执行
 if [ $? -ne 0 ]; then
     echo "#Error: Failed to fetch data from $INTERFACE_URL"
-    echo "collect_result -1"
+    echo "${COLLECT_RESULT} -1"
     exit 1
 fi
 
@@ -81,4 +82,4 @@ for METRIC in "${METRICS[@]}"; do
     # 输出处理后的指标项
     echo "$METRIC_LINE"
 done
-echo "collect_result 1"
+echo "${COLLECT_RESULT} 1"
