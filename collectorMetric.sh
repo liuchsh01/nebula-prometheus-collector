@@ -48,7 +48,7 @@ for METRIC in "${METRICS[@]}"; do
         NAME_PART=${NAMES[$i]}
 
         # 生成measure tag
-        if [[ $NAME_PART =~ ^(min|max|avg|p[\d]+)$ ]]; then
+        if [[ $NAME_PART =~ ^(min|max|avg|p[0-9]+)$ ]]; then
             MEASURE_TAG=$NAME_PART
 
         # 生成duration tag
